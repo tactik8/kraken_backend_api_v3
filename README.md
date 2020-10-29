@@ -9,6 +9,8 @@ This backend acts as an api for accessing and storing objects coming from differ
 
 Below is an example of a typical data accumulation process. A limited number of fields (keys) and metadata has been kept to increase readability.
 
+The scenario starts with a new email received. The emaila ddress of the sender is used to create a new person object. Then, an API call is made to peopledatalabs.com to retrieve personal information. Another call to gravatar.com is made to retrieve the picture along with some perosnal informaiton. The best information based on the credibility score is kept to producte a final record.
+
 - An email is received in an outlook inbox. The message is created in kraken database and information is extracted, including email of the sender. A person object is created in kraken with only the email address as information.
 ```
 { 
