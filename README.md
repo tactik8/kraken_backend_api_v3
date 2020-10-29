@@ -6,6 +6,9 @@ Backend python api for kraken object versioning and storage system.
 This backend acts as an api for accessing and storing objects coming from different sources. 
 
 Example for a person record:
+
+Below is an example of a typical data accumulation process. A limited number of fields (keys) and metadata has been kept to increase readability.
+
 - An email is received in an outlook inbox. The message is created in kraken database and information is extracted, including email of the sender. A person object is created in kraken with only the email address as information.
 ```
 { 
@@ -47,26 +50,32 @@ Example for a person record:
   "@type": "schema:person", 
   "schema:email": {
     "value": "john.smith@companyxyz.com",
-    "kraken:credibility": 50
+    "kraken:credibility": 50,'
+    "kraken:datasource": "peopledatalabs.com"
     }
   "schema:givenname": {
     "value": "John",
-    "kraken:credibility": 50
+    "kraken:credibility": 50,
+    "kraken:datasource": "peopledatalabs.com"
     },
   "schema:familyname": {
     "value":"Smith",
-    "kraken:credibility": 50
+    "kraken:credibility": 50,
+    "kraken:datasource": "peopledatalabs.com"
     },
   "schema:jobtitle": {
     "value":"Developer",
-    "kraken:credibility": 50
+    "kraken:credibility": 50,
+    "kraken:datasource": "peopledatalabs.com"
     },
   "schema:image": {
     "value":"https://gravatar.com/john.smith",
-    "kraken:credibility": 40
+    "kraken:credibility": 40,
+    "kraken:datasource": "gravatar.com"
     }
   }
-  
+- The new record object is saved to database, along with each data points.
+- When a new data point is generated, relevant fields (keys) are udpated.
 ```
 
 
