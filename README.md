@@ -3,9 +3,9 @@
 ## Description
 Backend python api for kraken object versioning and storage system.
 
-This backend acts as an api for accessing and storing objects coming from different sources. 
+This backend acts as an api for accessing and storing objects coming from different sources. It allows merging coming from different sources to generate a global record wit hte best information available from each. In the event of conflicting information, criterias are used to decide which to use (see metadata priority). 
 
-Example for a person record:
+### Example for a person record:
 
 Below is an example of a typical data accumulation process. A limited number of fields (keys) and metadata has been kept to increase readability.
 
@@ -19,28 +19,28 @@ Below is an example of a typical data accumulation process. A limited number of 
 - An API request is made to peopledatalabs.com to enrich the information. Contact information is added to the person object.
 ```
 { 
-"kraken:datasource": "peopledatalabs.com",
-"kraken:credibility": 50
-"@type": "schema:person", 
-"schema:email": "john.smith@companyxyz.com",
-"schema:givenname": "John",
-"schema:familyname": "Smith",
-"schema:jobtitle": "Developer",
-"schema:gender": "Male"
+  "kraken:datasource": "peopledatalabs.com",
+  "kraken:credibility": 50
+  "@type": "schema:person", 
+  "schema:email": "john.smith@companyxyz.com",
+  "schema:givenname": "John",
+  "schema:familyname": "Smith",
+  "schema:jobtitle": "Developer",
+  "schema:gender": "Male"
 }
 ```
 
 - An API request is made to gravatar.com. A new data point containing picture and limited contact information is added to the person object.
 ```
 { 
-"kraken:datasource": "gravatar.com",
-"kraken:credibility": 40
-"@type": "schema:person", 
-"schema:email": "john.smith@companyxyz.com",
-"schema:givenname": "John",
-"schema:familyname": "Smith",
-"schema:jobtitle": "Junior developer",
-"schema:image": "https://gravatar.com/john.smith"
+  "kraken:datasource": "gravatar.com",
+  "kraken:credibility": 40
+  "@type": "schema:person", 
+  "schema:email": "john.smith@companyxyz.com",
+  "schema:givenname": "John",
+  "schema:familyname": "Smith",
+  "schema:jobtitle": "Junior developer",
+  "schema:image": "https://gravatar.com/john.smith"
 }
 ```
 
@@ -98,3 +98,56 @@ Below is an example of a typical data accumulation process. A limited number of 
   - Data points can come from different sources (a person record with data from a CRM and an ERP)
 - Object versioning at the field level
   - Fields for a given object can draw value from different data points depending on best fit.
+
+
+## Information architecture
+
+### Metadata
+For each fields (keys) of a record, the following metadata is also kept:
+- value (string, int, float, dict, list, etc): the actual value of the field 
+- credibility (int): Number from 0 to 100 representing the credibility / probability of the data being good
+- datasource: the system theat generated the data (email, salesforce.com, etc.)
+- datasource_date_created: The date the record was created in the original datasource
+- datasource_date_modified: The date the record was last modified in the source system
+- kraken_date_created: The date the record was originally created in kraken
+- kraken_date_modified: The date the record was last modified in kraken
+
+### Metadata priority
+When a field (key) is available from different datapoints, the priority shold be given in the following order:
+1. credibility
+2. datasource_date_created
+3. datasource_date_modified
+4. kraken_date_created
+5. kraken_date_modified
+
+### Object schema
+- Objects are stored using schema.org jsonld schema. 
+- Fields (keys) should be named using the schema.org schema using the following naming convention: schema:givenname
+- Fields (keys) name should be all lowercase
+
+
+## API endpoints
+
+### /<object>
+#### Get
+  Parameters:
+  - skip: The number of record to skip (for paging)
+  - limit: the number of records to retrieve
+  - object: the type of record to retrieve (schema:person, schema:product, etc.)
+  - term: the terms to search for
+  
+  Retrieves the list of records and outpus them in a json list.
+  
+#### Post
+  Parameters:
+  - payload: record or list of record to store
+  - object: the type of record to store
+  
+  Post a record or list of record to the database
+  
+#### Delete
+
+
+
+
+
