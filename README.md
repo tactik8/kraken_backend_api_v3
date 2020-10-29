@@ -170,7 +170,8 @@ When a field (key) is available from different datapoints, the priority shold be
     1. For each fields (key), the new data popint is compared to the reference record
     1. Best fields (keys) is kept 
 1. Datapoint is saved to database
-1. Save new record (if changed) 
+1. Save new record (if changed)
+1. Return record_id
 
 ## Deleting data point
 1. Delete data point from database
