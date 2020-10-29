@@ -166,6 +166,7 @@ When a field (key) is available from different datapoints, the priority shold be
 1. Check for duplicate data point
     1. If datap point already exist, stop process.
 1. Record is retrieved from database (reference record)
+    1. If record_id is not provided, search base don available uniquely identifiable fields (email, url, etc,)
 1. Keep best data
     1. For each fields (key), the new data popint is compared to the reference record
     1. Best fields (keys) is kept 
