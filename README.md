@@ -102,6 +102,11 @@ Below is an example of a typical data accumulation process. A limited number of 
 
 ## Information architecture
 
+### Terminology
+- Record: Official record containing all the best information from different data points. A record can have several data points.
+- Data point: A series of fields (keys) and values belongiing to a record
+
+
 ### Metadata
 For each fields (keys) of a record, the following metadata is also kept:
 - value (string, int, float, dict, list, etc): the actual value of the field 
@@ -149,7 +154,7 @@ When a field (key) is available from different datapoints, the priority shold be
 
 
 ## Data processing
-### Posting new records
+### Posting new data points
 1. New data point is received through post api call
 1. Data point is normalized
     1. keys are put in lowercase
@@ -165,6 +170,11 @@ When a field (key) is available from different datapoints, the priority shold be
     1. For each fields (key), the new data popint is compared to the reference record
     1. Best fields (keys) is kept 
 1. Datapoint is saved to database
-1. New record (if changed) is saved to database
+1. Save new record (if changed) 
 
+## Deleting data point
+1. Delete data point from database
+1. Retrieve all other data point for record
+1. Recompile all fields (keys) with data point list
+1. Save new record (if changed)
 
