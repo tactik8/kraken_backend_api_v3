@@ -152,18 +152,18 @@ When a field (key) is available from different datapoints, the priority shold be
 ### Posting new records
 1. New data point is received through post api call
 1. Data point is normalized
-  1. keys are put in lowercase
-  1. keys are checked for "schema:..." structure. If not, it is added
-  1. Nested records are normalized in their own datapoint
+    1. keys are put in lowercase
+    1. keys are checked for "schema:..." structure. If not, it is added
+    1. Nested records are normalized in their own datapoint
 1. Sub records are extracted and linked
-  1. Sub records nested in data point are extracted and replaced by a link. 
-  1. Sub records go through the same process
+    1. Sub records nested in data point are extracted and replaced by a link. 
+    1. Sub records go through the same process
 1. Check for duplicate data point
-  1. If datap point already exist, stop process.
+    1. If datap point already exist, stop process.
 1. Record is retrieved from database (reference record)
 1. Keep best data
-  1. For each fields (key), the new data popint is compared to the reference record
-  1. Best fields (keys) is kept 
+    1. For each fields (key), the new data popint is compared to the reference record
+    1. Best fields (keys) is kept 
 1. Datapoint is saved to database
 1. New record (if changed) is saved to database
 
