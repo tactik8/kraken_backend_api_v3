@@ -132,6 +132,43 @@ When a field (key) is available from different datapoints, the priority shold be
 - Fields (keys) should be named using the schema.org schema using the following naming convention: schema:givenname
 - Fields (keys) name should be all lowercase
 
+### Nested objects
+The json-ld schema allows nesting objects within one another. 
+
+```
+{
+  "@type": "schema:person",
+  "@id": "person1",
+  "schema:givenname": "John",
+  "schema:worksfor": {
+    "@type": "schema:organization",
+    "@id": "org1",
+    "schema:name": "companyxyz"
+    }
+}
+```
+To ensure that data is always up to date, and since multiple objects can reference the same sub-object, each object is stored separately and refer to each other by their id. 
+
+```
+[
+  {
+    "@type": "schema:person",
+    "@id": "person1",
+    "schema:givenname": "John",
+    "schema:worksfor": {
+      "@type": "schema:organization",
+      "@id": "org1"
+      },
+  {
+      "@type": "schema:organization",
+      "@id": "org1",
+      "schema:name": "companyxyz"
+      }
+
+  }
+]
+```
+
 
 ## API endpoints
 
