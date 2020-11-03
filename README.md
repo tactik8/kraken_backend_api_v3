@@ -3,13 +3,13 @@
 ## Description
 Backend python api for kraken object versioning and storage system.
 
-This backend acts as an api for accessing and storing objects coming from different sources. It allows merging coming from different sources to generate a global record wit hte best information available from each. In the event of conflicting information, criterias are used to decide which to use (see metadata priority). 
+This backend acts as an api for accessing and storing objects coming from different sources. It allows merging coming data from different sources to generate a global record with te best information available from each. In the event of conflicting information, criterias are used to decide which to use (see metadata priority). 
 
 ### Example for a person record:
 
 Below is an example of a typical data accumulation process. A limited number of fields (keys) and metadata has been kept to increase readability.
 
-The scenario starts with a new email received. The emaila ddress of the sender is used to create a new person object. Then, an API call is made to peopledatalabs.com to retrieve personal information. Another call to gravatar.com is made to retrieve the picture along with some perosnal informaiton. The best information based on the credibility score is kept to producte a final record.
+The scenario starts with a new email received. The email address of the sender is used to create a new person object. Then, an API call is made to peopledatalabs.com to retrieve personal information. Another call to gravatar.com is made to retrieve the picture along with some personal information. The best information based on the credibility score is kept to produce a final record.
 
 - An email is received in an outlook inbox. The message is created in kraken database and information is extracted, including email of the sender. A person object is created in kraken with only the email address as information.
 ```
