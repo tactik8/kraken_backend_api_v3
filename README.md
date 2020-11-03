@@ -100,6 +100,10 @@ The scenario starts with a new email received. The email address of the sender i
   - Data points can come from different sources (a person record with data from a CRM and an ERP)
 - Object versioning at the field level
   - Fields for a given object can draw value from different data points depending on best fit.
+- Cache
+  - Each records can have multiple data points and an information extraction session can retrieve multiple duplicate data points. 
+  - To limit the number of database I/O, a cache is required to compile the results of data aggregation and write only once to db. 
+  - The records should also be accessible as read to avoid reading the same record multiple times. 
 
 
 ## Information architecture
@@ -204,13 +208,14 @@ To ensure that data is always up to date, and since multiple objects can referen
     1. Sub records go through the same process
 1. Check for duplicate data point
     1. If datap point already exist, stop process.
-1. Record is retrieved from database (reference record)
+1. Record is retrieved from cache or database (reference record)
     1. If record_id is not provided, search base don available uniquely identifiable fields (email, url, etc,)
 1. Keep best data
     1. For each fields (key), the new data popint is compared to the reference record
     1. Best fields (keys) is kept 
 1. Datapoint is saved to database
-1. Save new record (if changed)
+1. Save new record to cache
+1. When all records processed, save cache to database
 1. Return record_id
 
 ## Deleting data point
